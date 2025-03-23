@@ -1,13 +1,12 @@
 from time import sleep_ms
 import uhashlib, ubinascii
-from tropic_upy_lib import ts, pkey_index_0, sh0priv, sh0pub
+from upy_esp32_tropic01.tropic_upy_lib import  SW, print_head, ts, pkey_index_0, sh0priv, sh0pub
+
 
 DEBUG_LOG = False
 
-print("=" * 30)
-print("Signing SHA256 hash with TROPIC01 (SECP256R1)...")
+print_head("Signing SHA256 hash with TROPIC01 (SECP256R1)",True)
 
-print("=" * 32)
 print("Starting secure session...\n")
 ts.start_secure_session(pkey_index_0, bytes(sh0priv), bytes(sh0pub))
 
@@ -78,23 +77,30 @@ print("S:",rs[1].hex())
 """
 
 if DEBUG_LOG:
-    print("-"*30)
+    print("-"*SW)
     print("[ Log ]")
     print(ts.get_log())
     
     
 """
+MPY: soft reboot
+--------------------------------------------------
+Lib. TropicSquareMicroPython | version: 0.0.1
+Signing SHA256 hash with TROPIC01 (SECP256R1)
+--------------------------------------------------
 Starting secure session...
 
-len(ecc_key) 128
---------------------------------
+pkey_index_0: 0
+Exception: Response status is not OK (status: 0x7f)
+hashed_message: ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+--------------------------------------------------
 [Slot] 1
 ecc_key: 90cf272a6b284f33f20a5e3506b0ebf29b5259db4323f9e21036961eba98e09c678ab1db7ea681f07a09b5e09072c4d4f97003da6937da695440ed43aefa52f9
 R: 4cc9f47d24b6cb2d8edc82b71a62a0e0e354fa9027805385cd4e73778ecbf757
 S: be798b2122cd9313055e245a81ed80f5060ba83903c7ff31b090de3a4a07f99d
 
 ...
---------------------------------
+--------------------------------------------------
 [Slot] 2
 Error reading ECC key from slot 2 : Command failed with result: 0x12
 Generating new ECC key in slot 2

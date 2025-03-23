@@ -4,9 +4,19 @@ import sys
 import uhashlib, ubinascii
 from time import sleep, sleep_ms
 from tropicsquare.ports.micropython import TropicSquareMicroPython
+from tropicsquare import __version__
 from machine import SPI, Pin
 
-DEBUG_PRINT = True
+DEBUG_PRINT = False
+SW = 50 # separator width
+
+# Head | info
+def print_head(head,print_ver=False):
+    print("-"*SW)
+    if print_ver:
+        print("Lib. TropicSquareMicroPython | version:", __version__)
+    print(head)
+    print("-"*SW)
 
 # Default factory pairing keys
 pkey_index_0 = 0x00  # Slot 0
@@ -17,7 +27,6 @@ sh0pub = [0xe7, 0xf7, 0x35, 0xba, 0x19, 0xa3, 0x3f, 0xd6, 0x73, 0x23, 0xab, 0x37
 
 # SPI Initialization
 if DEBUG_PRINT:
-    print("TROPIC uPy Basic Library | ESP32")
     print("[ SPI init ]")
 spi = SPI(1, baudrate=1000000, polarity=0, phase=0, sck=Pin(18), miso=Pin(19), mosi=Pin(23))
 cs = Pin(5, mode=Pin.OUT, value=1)
@@ -26,5 +35,5 @@ cs = Pin(5, mode=Pin.OUT, value=1)
 ts = TropicSquareMicroPython(spi, cs)
 
 if DEBUG_PRINT:
-    print("="*32)
+    print("="*SW)
     print()
